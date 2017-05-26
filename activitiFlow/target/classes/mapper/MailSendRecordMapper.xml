@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.perkins.dao.mapper.MailSendRecordMapper">
+	<resultMap id="baseResultMap" type="com.perkins.entity.MailSendRecord">
+		<id column="ID" property="id" jdbcType="BIGINT" />
+		<result column="TASK_ID" property="taskId" jdbcType="BIGINT" />
+		<result column="RECEIVER" property="receiver" jdbcType="VARCHAR" />
+		<result column="MAIL_STATUS" property="mailStatus" jdbcType="VARCHAR" />
+		<result column="MAIL_CONTENT" property="mailContent" jdbcType="VARCHAR" />
+		<result column="MAIL_TITILE" property="mailTitile" jdbcType="VARCHAR" />
+		<result column="DELETED" property="deleted" jdbcType="CHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="CREATE_BY" property="createbBy" jdbcType="INTEGER" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_BY" property="updateBy" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- 输出字段列 -->
+	<sql id="MailSendRecordColumns">
+		ID,
+		TASK_ID,
+		RECEIVER,
+		MAIL_STATUS,
+		MAIL_CONTENT,
+		MAIL_TITILE,
+		DELETED,
+		CREATE_DATE,
+		CREATE_BY,
+		UPDATE_DATE,
+		UPDATE_BY
+	</sql>
+	
+	<select id="findMailSendRecordById" parameterType="java.lang.Long" resultMap="baseResultMap">
+	    select 
+	       <include refid="MailSendRecordColumns" />
+	    from TBYB_MAIL_SEND_RECORD
+	    where id=#{id}
+	</select>
+	
+	<select id="findMailSendInfos" parameterType="java.lang.Long" resultType="java.util.Map">
+	     SELECT 
+	         usr.* 
+	      from 
+	      	act_ru_task tak 
+	      LEFT JOIN 
+	      	act_ru_identitylink lin on lin.TASK_ID_=tak.ID_ 
+	      LEFT JOIN 
+	      	TB_SYS_USER_ROLE usrol ON to_char(usrol.ROLE_ID)=lin.GROUP_ID_
+		  LEFT JOIN 
+			TB_SYS_USER usr on usr.ID=usrol.USER_ID
+		  WHERE 
+		     tak.ID_=#{taskId}
+	</select>
+	
+	<select id="findTasksNeedSendMail" resultType="java.lang.Long">
+	   select 
+	   		tak.ID_ 
+	   	from 
+	   		ACT_RU_TASK tak 
+	   	where 
+	   		not exists(
+	   			select 1 from TBYB_MAIL_SEND_RECORD rec 
+	   			where rec.task_id=tak.ID_ AND rec.MAIL_STATUS='SUCCESS')
+	</select>
+</mapper>

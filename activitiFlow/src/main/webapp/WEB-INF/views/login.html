@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>angular测试页面</title>
+	
+ </head>
+ 
+ <body ng-app="myApp">
+   <div ng-controller="myCtr">
+    	 用户名：<input type="text" />
+	 <h1>{{msg | uppercase}}</h1>
+	 <select>
+		<option ng-repeat="x in names | orderBy:'Name'" value="{{x.age | number:2}}">{{x.Name}}</option>
+	</select>
+	 <table >
+	  <tr ng-repeat="x in names | orderBy:'Name'" >
+		<td style="border:1px solid red">{{ x.Name }}</td>
+		<td style="border:1px solid red">{{ x.Country }}</td>
+	  </tr>
+	</table>
+	  <p>form = {{user}}</p>
+	  <p>master = {{master}}</p>
+   </div>
+  <script src="../js/angular.js"></script>
+  <script type="text/javascript">
+      var app=angular.module('myApp',[]);
+	  app.controller('myCtr',function($scope,$http){
+	      $scope.msg="hello kitty";
+		  $scope.names =[{Name:'zhangsan',Country:'china',age:12},
+						 {Name:'lisi',Country:'china',age:29},
+						 {Name:'wangwu',Country:'china',age:32},
+						 {Name:'zhaoliu',Country:'china',age:18}];
+		  $scope.master = {firstName: "John", lastName: "Doe"};
+		  $scope.reset = function() {
+			 $scope.user = angular.copy($scope.master);
+		  };
+		  $scope.reset();
+	       console.log($http);
+	       $http({
+	    	   url:"localhost:8080/activitiFlow/angular/test2",
+	    	   param:{
+	    		   id:12345
+	    	   }
+	       });
+	  });
+	  
+  </script>
+ </body>
+</html>

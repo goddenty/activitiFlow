@@ -11,10 +11,12 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perkins.dao.mapper.MailSendRecordMapper;
 import com.perkins.entity.MailSendRecord;
 import com.perkins.service.IMailSendRecordService;
+import com.perkins.service.IShiroService;
 
 /**
  * 
@@ -27,6 +29,8 @@ import com.perkins.service.IMailSendRecordService;
 @Service
 public class MailSendRecordService extends BaseService<MailSendRecord, MailSendRecordMapper> implements IMailSendRecordService{
 	
+	IShiroService shiroService
+	
 	public MailSendRecord findMailSendRecordById(long id){
         return this.mapper.findMailSendRecordById(id);
     }
@@ -35,11 +39,14 @@ public class MailSendRecordService extends BaseService<MailSendRecord, MailSendR
 		return this.mapper.findTasksNeedSendMail();
 	}
 	
+	@Transactional
 	public void sendMail(){
 		MailSendRecord record=new MailSendRecord();
 		record.setMailContent("秦时明月汉时关，万里长征人未还");
 		record.setMailTitile("诗歌拾遗");
 		record.setReceiver("fangcunlei@126.com");
+		shiroService.test();
+		this.mapper.findTasksNeedSendMail();
 		this.mapper.insert(record);
 	}
 	

@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.perkins.service.IShiroService;
 
@@ -22,5 +23,9 @@ public class ShiroServiceImpl implements IShiroService{
 		System.out.println("Service SessionVal: " + val);
 	}
 	
+	@Transactional(requires_new)
+	public void test(){
+		
+	}
 }
  

@@ -106,10 +106,11 @@
   <script type="text/javascript">
   	$.ajax({
   		url:'../angular/test2',
-  		method:'post',
+  		type:'post',
+  		dataType:'json',
   		data: {username:"123", content:"456"},
   		success: function(data){
-  			console.log(data);
+  			console.log(data.name);
   		}
   	})
 	  

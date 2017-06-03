@@ -29,7 +29,7 @@ import com.perkins.service.IShiroService;
 @Service
 public class MailSendRecordService extends BaseService<MailSendRecord, MailSendRecordMapper> implements IMailSendRecordService{
 	
-	IShiroService shiroService
+	IShiroService shiroService;
 	
 	public MailSendRecord findMailSendRecordById(long id){
         return this.mapper.findMailSendRecordById(id);

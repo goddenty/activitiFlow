@@ -23,7 +23,7 @@ public class ShiroServiceImpl implements IShiroService{
 		System.out.println("Service SessionVal: " + val);
 	}
 	
-	@Transactional(requires_new)
+	@Transactional()
 	public void test(){
 		
 	}

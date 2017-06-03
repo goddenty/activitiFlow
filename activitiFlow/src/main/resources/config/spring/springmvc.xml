@@ -18,7 +18,28 @@
 	    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	</context:component-scan>
 	<!-- 使用 mvc:annotation-driven代替上边定义的处理器适配器和处理器映射器 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+	   <mvc:message-converters>  
+	        <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+	            <property name="supportedMediaTypes">  
+	                <list>  
+	                    <value>text/plain;charset=UTF-8</value>  
+	                    <value>text/html;charset=UTF-8</value>  
+	                </list>  
+	            </property>  
+	        </bean>  
+	        <bean  
+	            class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+	            <property name="supportedMediaTypes">  
+	                <list>  
+	                    <value>application/json; charset=UTF-8</value>  
+	                    <value>text/json; charset=UTF-8</value>  
+	                    <value>application/x-www-form-urlencoded; charset=UTF-8</value>  
+	                </list>  
+	            </property>      
+	        </bean>  
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
     <mvc:default-servlet-handler/> 
 	<!-- 视图解析器 -->
 	<bean

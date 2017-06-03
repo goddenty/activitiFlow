@@ -43,6 +43,7 @@ public class TestController {
    public  String testRequest(@RequestParam Map<String,Object> param ){
 	   System.out.println(222222222+","+param.get("content")+","+param.get("username"));
 	   ObjectMapper obj=new ObjectMapper();
+	   System.out.println(289393939);
 	   return "{id:12345,name:'jerry'}";
    }
 }

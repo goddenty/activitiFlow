@@ -88,7 +88,7 @@
 	</div>
    <div ng-controller="myCtr">
      <h1>这是一个测试页面</h1>
-	 <h1></h1>
+	 <h1 id="user_name"></h1>
 	 <h1>{{pathName}}</h1>
 	 <select>
 		<option ng-repeat="x in names | orderBy:'Name'" value="{{x.age | number:2}}">{{x.Name}}</option>
@@ -112,7 +112,9 @@
 	  		success: function(data){
 	  			var obj=eval('('+data+')');
 	  			console.log(data);
+	  		    
 	  			console.log(obj+","+obj.name);
+	  			$("#user_name").html(obj.name);
 	  		}
 	  	});
 	  	
